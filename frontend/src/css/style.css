@@ -1,3 +1,5 @@
+@import url("modal.css");
+
 :root {
 	--white: #fff;
 	--black: #000;
@@ -77,6 +79,11 @@ a:hover {
 }
 
 /* BUTTONS */
+
+#addBtn {
+	margin-bottom: 15px;
+}
+
 .btn {
 	display: inline-block;
 	cursor: pointer;
@@ -140,65 +147,6 @@ a:hover {
 	box-shadow: 1px 1px 7px #c4c4c4;
 }
 
-/* FORMS */
-form {
-	display: inline-flex;
-	flex-direction: column;
-	align-items: flex-start;
-	margin-bottom: 48px;
-	background: #ffff;
-	min-width: 28rem;
-	padding: 24px;
-}
-
-.form h2 {
-	font-size: 24px;
-	font-weight: 400;
-}
-
-.form h3 {
-	font-size: 20px;
-	font-weight: 300;
-	margin-bottom: 15px;
-}
-
-.form-section {
-	border-bottom: var(--neutral-4) solid 1px;
-	margin-bottom: 20px;
-}
-
-.input-required {
-	color: var(--primary-2);
-	text-decoration: none;
-	font-weight: bold;
-	padding: 0 1px;
-}
-
-.label {
-	display: block;
-	font-weight: 500;
-}
-
-.input {
-	font-size: 16px;
-	padding: 0.75em 0.5em;
-	min-width: 300px;
-	border: 0;
-	border-left: 7px solid var(--neutral-4);
-	margin-bottom: 1.5rem;
-	transition: border-left-color 160ms;
-	background-color: #d7d7d7;
-}
-
-::placeholder {
-	color: var(--neutral-3);
-}
-
-.input:focus {
-	outline: none;
-	border-left: 7px solid var(--primary-1);
-}
-
 /* NAVBAR */
 .navbar {
 	background-color: white;
@@ -252,6 +200,17 @@ form {
 	background-color: var(--neutral-5);
 }
 
+.actions-td {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-evenly;
+	min-width: 50px;
+}
+
+.delete-icon, 
+.edit-icon{
+	cursor: pointer;
+}
 /*********/
 
 .names-input {

@@ -1,5 +1,23 @@
 import snackbar from "snackbar";
+import { getModal } from ".//modal";
 
+const addButton = document.querySelector("#addBtn");
+const addStudentModal = document.createElement('div');
+
+addStudentModal.innerHTML = `<form action="#" id="studentForm">
+<label for="firstName">Your name</label>
+<input class="input" type="text" id="firstName" required name="firstName" autocomplete="off">
+<label for="surname">Your surname</label>
+<input class="input" type="text" id="surname" required name="surname" autocomplete="off">
+<label for="address">Your address</label>
+<input class="input" type="text" id="address" required name="address" autocomplete="off">
+<label for="age">Your age</label>
+<input class="input" type="number" id="age" required name="age" autocomplete="off">
+<button id="btn" class="btn btn-outline">Submit</button>`;
+
+getModal(addButton, addStudentModal);
+
+const modal = document.querySelector('.modal');
 const form = document.querySelector('#studentForm');
 const submitButton = document.querySelector('#btn');
 const tableBody = document.querySelector('#tbody');
@@ -52,6 +70,7 @@ form.addEventListener('submit', async (e) => {
         appendStudentToTable(newStudentData);
       }
       resetForm();
+      modal.style.display = "none";
     } else {
       console.error('Failed to submit the form');
     }
@@ -77,6 +96,9 @@ function updateStudentInTable(student) {
 }
 
 function updateStudentDataInForm(student) {
+
+  modal.style.display = "block";
+
   document.querySelector('#firstName').value = student.firstName;
   document.querySelector('#surname').value = student.surname;
   document.querySelector('#address').value = student.address;
@@ -106,24 +128,36 @@ function appendStudentToTable(student) {
   row.appendChild(ageCell);
 
   const actionsCell = document.createElement('td');
-  const deleteButton = document.createElement('button');
+  actionsCell.classList.add('actions-td');
 
-  deleteButton.textContent = 'x';
+  const deleteButton = document.createElement('div');
+  const editButton = document.createElement('div');
 
+  deleteButton.innerHTML = `<i class="fa-solid fa-trash delete-icon" style="color: #b00c0c;"></i>`;
+  editButton.innerHTML = `<i class="fa-solid fa-pen-to-square edit-icon" style="color: #000000;"></i>`;
+
+  actionsCell.appendChild(editButton);
+  actionsCell.appendChild(deleteButton);
+
+  //Удаление студента
   deleteButton.addEventListener('click', () => {
-    deleteStudent(student.id);
 
-    snackbar.show('Пользователь удален!');
+    if (confirm('Are you sure you want to delete?')) {
 
-    resetForm();
-    updateStudentDataInForm(student);
+      deleteStudent(student.id);
+
+      snackbar.show('Пользователь удален!');
+
+      resetForm();
+      updateStudentDataInForm(student);
+    }
   });
 
-  actionsCell.appendChild(deleteButton);
   row.appendChild(actionsCell);
 
-  row.addEventListener('click', () => {
-    selectedRow = row;
+  //Редактирование студента
+  editButton.addEventListener('click', (event) => {
+    selectedRow = event.currentTarget.closest('tr');
     updateStudentDataInForm(student);
   });
 
