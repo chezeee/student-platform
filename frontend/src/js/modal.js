@@ -1,6 +1,7 @@
 export function getModal(callButton, modalContent) {
 
-  //Создание основной структуры модального окна
+  /* Создание основной структуры модального окна */
+
   const modal = document.createElement("div");
   const modalContentWrapper = document.createElement("div");
   const closeButton = document.createElement("span");
@@ -17,7 +18,7 @@ export function getModal(callButton, modalContent) {
   modalContentWrapper.append(closeButton);
   modalContentWrapper.append(modalContent);
 
-  //Логика работы модального окна
+  /* Логика работы модального окна */
   callButton.addEventListener("click", () => {
     modal.style.display = "block";
   });
@@ -26,10 +27,29 @@ export function getModal(callButton, modalContent) {
     modal.style.display = "none";
   });
 
-  window.addEventListener("click", (event) => {
+
+  /* Закрытие модалки по клику вокруг окна */
+  let overlayChecker = false;
+
+  window.addEventListener('mousedown', function (event) {
+    /**
+    * Проверяем было ли нажатие над вокруг modal,
+    * и отмечаем это в переменной overlayChecker
+    */
     if (event.target == modal) {
-      modal.style.display = "none";
-    }
+      overlayChecker = true;
+    };
   });
 
+  window.addEventListener('mouseup', async function (event) {
+    /**
+    * Проверяем было ли отпускание мыши вокруг modal,
+    * и если нажатие тоже было на нём, то закрываем окно
+    * и обнуляем overlayChecker
+    */
+    if (overlayChecker && (event.target == modal)) {
+      modal.style.display = "none";
+    }
+    overlayChecker = false;
+  });
 }
